@@ -6,11 +6,18 @@ repo: relaxingame-status # Nombre de este repo
 user-agent: Inaki-de-miguel
 
 # Endpoints a vigilar.
-# Los /health se añaden aquí debajo cuando tengas las rutas exactas.
 sites:
   - name: Web
     url: https://relaxingame.app
     maxResponseTime: 5000 # más de 5 s cuenta como "degradado"
+
+  # Backend de estadísticas (Python). URL provisional de Railway:
+  # cuando se mueva a la red interna, sustituir por un health de la web.
+  - name: Estadísticas
+    slug: estadisticas
+    url: https://web-production-f2a7e.up.railway.app/health
+    maxResponseTime: 5000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
 
 # Te asigna a ti los issues de caída
 assignees:
