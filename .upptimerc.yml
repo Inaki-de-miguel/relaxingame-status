@@ -19,6 +19,41 @@ sites:
     maxResponseTime: 5000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
+  # Comprueba con una consulta real que el backend llega a Supabase
+  - name: Base de datos
+    slug: base-de-datos
+    url: https://web-production-f2a7e.up.railway.app/health/db?deep_check=true
+    maxResponseTime: 5000
+    __dangerous__body_down_if_text_missing: '"supabase_connected":true'
+
+  # Comprueba que la RIOT_API_KEY es válida (resultado cacheado 60 s en el backend)
+  - name: API de Riot
+    slug: api-riot
+    url: https://web-production-f2a7e.up.railway.app/health/riot
+    maxResponseTime: 10000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
+
+  # Login de usuarios (Supabase Auth)
+  - name: Inicio de sesión
+    slug: login
+    url: https://web-production-f2a7e.up.railway.app/health/auth
+    maxResponseTime: 10000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
+
+  # El scheduler sigue sincronizando partidas y no hay cola atascada
+  - name: Sincronización de partidas
+    slug: sync
+    url: https://web-production-f2a7e.up.railway.app/health/sync
+    maxResponseTime: 10000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
+
+  # Valida la clave de Claude sin gastar tokens (cacheado 5 min en el backend)
+  - name: AI Coach
+    slug: ai-coach
+    url: https://web-production-f2a7e.up.railway.app/health/ai
+    maxResponseTime: 10000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
+
 # Te asigna a ti los issues de caída
 assignees:
   - Inaki-de-miguel
