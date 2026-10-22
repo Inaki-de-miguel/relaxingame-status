@@ -1,31 +1,43 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+# Configuración de Upptime para RelaxInGame Studio
+# Docs: https://upptime.js.org/docs/configuration
 
+owner: Inaki-de-miguel # Usuario de GitHub
+repo: relaxingame-status # Nombre de este repo
+user-agent: Inaki-de-miguel
+
+# Endpoints a vigilar.
+# Los /health se añaden aquí debajo cuando tengas las rutas exactas.
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  - name: Web
+    url: https://relaxingame.app
+    maxResponseTime: 5000 # más de 5 s cuenta como "degradado"
+
+# Te asigna a ti los issues de caída
+assignees:
+  - Inaki-de-miguel
+
+# Mantiene el historial de incidentes aunque duren menos de 15 min
+skipDeleteIssues: true
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  cname: status.relaxingame.app
+  name: RelaxInGame Studio — Status
+  introTitle: "**Estado de RelaxInGame**"
+  introMessage: Estado en tiempo real de relaxingame.app. Si algo falla, lo verás aquí primero.
+  theme: dark
   navbar:
-    - title: Status
+    - title: Estado
       href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
+    - title: Web
+      href: https://relaxingame.app
+  links:
+    - rel: stylesheet
+      href: https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap
+  css: ':root { --body-background-color: #000000; --body-text-color: #e6e6e6; --card-background-color: #000000; --nav-background-color: #000000; --nav-border-bottom-color: #207981; } body { font-family: "JetBrains Mono", ui-monospace, monospace; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 16px 16px; } a { color: #2bb3bd; } article, .card, section > div { border: 1px solid #1f1f1f; border-radius: 0 !important; box-shadow: none !important; }'
+  metaTags:
+    - name: color-scheme
+      content: dark
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+i18n:
+  activeIncidents: Incidentes activos
+  allSystemsOperational: Todos los sistemas están operativos
