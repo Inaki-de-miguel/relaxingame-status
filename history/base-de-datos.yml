@@ -1,7 +1,7 @@
-url: https://web-production-f2a7e.up.railway.app/health/db?deep_check=true
-status: up
-code: 200
-responseTime: 658
-lastUpdated: 2026-10-23T08:55:44.826Z
+url: https://relaxingame.app/api/status.php?check=db
+status: down
+code: 404
+responseTime: 79
+lastUpdated: 2026-10-23T10:33:21.722Z
 startTime: 2026-10-22T12:27:21.780Z
 generator: Upptime <https://github.com/upptime/upptime>
