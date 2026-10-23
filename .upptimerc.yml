@@ -1,69 +1,73 @@
-# Configuración de Upptime para RelaxInGame Studio
+# Upptime configuration for RelaxInGame Studio
 # Docs: https://upptime.js.org/docs/configuration
 
-owner: Inaki-de-miguel # Usuario de GitHub
-repo: relaxingame-status # Nombre de este repo
+owner: Inaki-de-miguel # GitHub username
+repo: relaxingame-status # This repository
 user-agent: Inaki-de-miguel
 
-# Endpoints a vigilar.
+# Endpoints to monitor.
+# The backend is only reachable through Railway's private network, so every
+# backend check goes through the website: /api/status.php calls the matching
+# /health endpoint internally and only answers {"status":"ok"} or "down".
+# Keep the slugs as they are: the status page and its history depend on them.
 sites:
-  - name: Web
+  - name: Website
+    slug: web
     url: https://relaxingame.app
-    maxResponseTime: 5000 # más de 5 s cuenta como "degradado"
+    maxResponseTime: 5000 # slower than 5 s counts as "degraded"
 
-  # Backend de estadísticas (Python). URL provisional de Railway:
-  # cuando se mueva a la red interna, sustituir por un health de la web.
-  - name: Estadísticas
+  # The stats backend is responding
+  - name: Stats API
     slug: estadisticas
-    url: https://web-production-f2a7e.up.railway.app/health
-    maxResponseTime: 5000
+    url: https://relaxingame.app/api/status.php?check=stats
+    maxResponseTime: 10000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-  # Comprueba con una consulta real que el backend llega a Supabase
-  - name: Base de datos
+  # The backend can reach Supabase (real query)
+  - name: Database
     slug: base-de-datos
-    url: https://web-production-f2a7e.up.railway.app/health/db?deep_check=true
-    maxResponseTime: 5000
-    __dangerous__body_down_if_text_missing: '"supabase_connected":true'
+    url: https://relaxingame.app/api/status.php?check=db
+    maxResponseTime: 10000
+    __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-  # Comprueba que la RIOT_API_KEY es válida (resultado cacheado 60 s en el backend)
-  - name: API de Riot
+  # The backend's RIOT_API_KEY is valid
+  - name: Riot API
     slug: api-riot
-    url: https://web-production-f2a7e.up.railway.app/health/riot
+    url: https://relaxingame.app/api/status.php?check=riot
     maxResponseTime: 10000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-  # Login de usuarios (Supabase Auth)
-  - name: Inicio de sesión
+  # User sign-in (Supabase Auth)
+  - name: Sign in
     slug: login
-    url: https://web-production-f2a7e.up.railway.app/health/auth
+    url: https://relaxingame.app/api/status.php?check=auth
     maxResponseTime: 10000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-  # El scheduler sigue sincronizando partidas y no hay cola atascada
-  - name: Sincronización de partidas
+  # The scheduler keeps syncing matches and the queue isn't stuck
+  - name: Match sync
     slug: sync
-    url: https://web-production-f2a7e.up.railway.app/health/sync
+    url: https://relaxingame.app/api/status.php?check=sync
     maxResponseTime: 10000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-  # Valida la clave de Claude sin gastar tokens (cacheado 5 min en el backend)
+  # The Claude API key is valid (no tokens spent)
   - name: AI Coach
     slug: ai-coach
-    url: https://web-production-f2a7e.up.railway.app/health/ai
+    url: https://relaxingame.app/api/status.php?check=ai
     maxResponseTime: 10000
     __dangerous__body_down_if_text_missing: '"status":"ok"'
 
-# Te asigna a ti los issues de caída
+# Assign every downtime issue to you
 assignees:
   - Inaki-de-miguel
 
-# Mantiene el historial de incidentes aunque duren menos de 15 min
+# Keep incidents in the history even if they last less than 15 minutes
 skipDeleteIssues: true
 
-# La página pública es la propia (repo relaxingame-status-page, en
-# status.relaxingame.app). La de Upptime queda solo como respaldo en
-# inaki-de-miguel.github.io/relaxingame-status, sin dominio propio.
+# The public page is our own (repo relaxingame-status-page, served at
+# status.relaxingame.app). Upptime's built-in page stays only as a backup at
+# inaki-de-miguel.github.io/relaxingame-status, without a custom domain.
 status-website:
   baseUrl: /relaxingame-status
   name: RelaxInGame Studio
